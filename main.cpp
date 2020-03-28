@@ -4,9 +4,11 @@
 
 Create a branch named Part1
 
+Purpose:  This project will show you the difference between member functions and static class functions, as well as the difference between pointers and references and the code semantics that accompany pointers and references.
+
  Pointers
 
- Please look at the screenshot in the files to see what happens if you copy this assignment into Xcode
+ Please look at the screenshot in the files to see what happens if you paste this assignment into an existing cpp file in an xcode project
  
  Task: replace all of the <place holder> with proper names and types that will make this program compile and run.
  
@@ -29,6 +31,8 @@ Create a branch named Part1
          see 8) for a hint about what type to use.
  
  6) finish instantiating the two T instances being declared in main(), based on the constructor you finished implementing in T
+     Their names (line 105,106) are different than the member variables names (line 77), even tho the placeholders share the same name.
+     Don't let this confuse you.
  
  7) Declare 'f' with the proper type so the call to f.compare works
  
@@ -43,11 +47,15 @@ Create a branch named Part1
  
  12) replicate the functionality of <structName2>'s static function by implementing a member function in U that does the same thing.
  
+ 13) remember the rules for using pointers!  What is the one thing we always do before we use a pointer?
+ 
  After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
  
  Commit your changes by clicking on the Source Control panel on the left, entering a message, and click [Commit and push].
  
- Send me the the link to your repl.it in a DM on Slack
+Make a pull request after you make your first commit and pin the pull request link to our DM thread.
+
+send me a DM to check your pull request
 
  Wait for my code review.
  */
