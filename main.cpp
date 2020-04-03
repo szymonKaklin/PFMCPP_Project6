@@ -12,10 +12,10 @@ Purpose:  This project will show you the difference between member functions and
  
  Task: replace all of the <place holder> with proper names and types that will make this program compile and run.
  
- steps:
+ press the Compile, link and run... button and work your way through all of the error messages.
  
- 0) press the Compile, link and run... button and work your way through all of the error messages.
-         you can click on them to be taken to the appropriate line number.
+
+ steps:
  
  1) finish implementing the constructor for T. the constructor parameters need to initialize 2) and 3)
  
@@ -38,7 +38,7 @@ Purpose:  This project will show you the difference between member functions and
  
  8) call f.compare() with the correct arguments, based on 2) and 5)
  
- 9) correct the cout that uses bigger's member variable with some safe pointer usage.
+ 9) correct the cout that uses smaller's member variable with some safe pointer usage.
          the possible return values of the compare() function should give you a hint.
  
  10) complete the implementation for the static function in <structName2>
