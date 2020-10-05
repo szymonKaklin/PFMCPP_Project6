@@ -64,11 +64,7 @@
 #include <string>
 struct T
 {
-    T(int v, const char x)
-    {
-        value = v;
-        name = x;
-    } //1
+    T(int v, const char* x) : value(v), name(x) {} //1
     int value; //2
     std::string name; //3
 };
@@ -78,15 +74,18 @@ struct Comparator                            //4
     Comparator() {}
     T* compare(T* a, T* b) //5
     {
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+        if( a && b != nullptr)
+        {
+            if( a->value < b->value ) return a;
+            if( a->value > b->value ) return b;
+        } 
         return nullptr;
     }
 };
 
 struct U
 {
-    float first { 4.5f }, second { 8.23f };
+    float first { 0 }, second { 0 };
     float memberFunction(float* newValue)      //12
     {
         std::cout << "U's first value: " << first << std::endl;
@@ -115,32 +114,36 @@ struct structTwo
 {
     static float staticFunctionA(U* that, float* newValue )        //10
     {
-        std::cout << "U's first value: " << that->first << std::endl;
-        that->first = *newValue;
-        std::cout << "U's first updated value: " << that->first << std::endl;
-        while( std::abs(that->second - that->first) > 0.001f )
+        if( that && newValue != nullptr )
         {
-            /*
-             write something that makes the distance between that->second and that->first get smaller
-             */
-            if( that->second > that->first)
+            std::cout << "U's first value: " << that->first << std::endl;
+            that->first = *newValue;
+            std::cout << "U's first updated value: " << that->first << std::endl;
+            while( std::abs(that->second - that->first) > 0.001f )
             {
-                that->first += 0.001f;
+                /*
+                write something that makes the distance between that->second and that->first get smaller
+                */
+                if( that->second > that->first)
+                {
+                    that->first += 0.001f;
+                }
+                else
+                {
+                    that->second += 0.001f;
+                }
             }
-            else
-            {
-                that->second += 0.001f;
-            }
+            std::cout << "U's second updated value: " << that->second << std::endl;
+            return that->second * that->first;
         }
-        std::cout << "U's second updated value: " << that->second << std::endl;
-        return that->second * that->first;
+        return 0.f;
     }
 };
         
 int main()
 {
-    T first(5, 'f');                                            //6
-    T second(7, 's');                                             //6
+    T first(7, "first");                                            //6
+    T second(7, "second");                                             //6
     
     Comparator f;                                            //7
     auto* smaller = f.compare(&first, &second);                              //8
@@ -150,7 +153,7 @@ int main()
     }
     else
     {
-        std::cout << "both are the same" << std::endl;
+        std::cout << "both are the same or nullptr present" << std::endl;
     }
     
     
@@ -161,11 +164,3 @@ int main()
     U fourthTest;
     std::cout << "[member func] fourthTest's multiplied values: " << fourthTest.memberFunction( &updatedValue ) << std::endl;
 }
-        
-        
-        
-        
-        
-        
-        
-        
