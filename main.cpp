@@ -74,7 +74,7 @@ struct Comparator                            //4
     Comparator() {}
     T* compare(T* a, T* b) //5
     {
-        if( a && b != nullptr)
+        if( a!= nullptr && b != nullptr)
         {
             if( a->value < b->value ) return a;
             if( a->value > b->value ) return b;
@@ -114,7 +114,7 @@ struct structTwo
 {
     static float staticFunctionA(U* that, float* newValue )        //10
     {
-        if( that && newValue != nullptr )
+        if( that != nullptr && newValue != nullptr )
         {
             std::cout << "U's first value: " << that->first << std::endl;
             that->first = *newValue;
