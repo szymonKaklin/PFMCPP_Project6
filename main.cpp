@@ -74,7 +74,7 @@ struct Comparator                            //4
     Comparator() {}
     T* compare(T* a, T* b) //5
     {
-        if( a!= nullptr && b != nullptr)
+        if( a != nullptr && b != nullptr )
         {
             if( a->value < b->value ) return a;
             if( a->value > b->value ) return b;
