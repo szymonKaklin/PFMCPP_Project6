@@ -65,7 +65,7 @@ struct U
 
 struct structTwo
 {
-    static float staticFunctionA(U& that, const float& newValue )        //10
+    static float staticFunctionA(U& that, const float& newValue)        //10
     {
         std::cout << "U's first value: " << that.first << std::endl;
         that.first = newValue;
@@ -75,7 +75,7 @@ struct structTwo
             /*
             write something that makes the distance between that->second and that->first get smaller
             */
-            if( that.second > that.first)
+            if( that.second > that.first )
             {
                 that.first += 0.001f;
             }
