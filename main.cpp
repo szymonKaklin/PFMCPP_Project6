@@ -29,13 +29,12 @@ struct T
 struct Comparator                            //4
 {
     Comparator() {}
-    T* compare(T* a, T* b) //5
+    T* compare(T& a, T& b) //5
     {
-        if( a != nullptr && b != nullptr )
-        {
-            if( a->value < b->value ) return a;
-            if( a->value > b->value ) return b;
-        } 
+        // this function returns pointers, so I didn't convert to reference types. I did however change it to be pass by reference, and return the memory address of a and b, which should work the same as the previous implementation. Is my understanding of this correct?
+        // Since these aren't local variables (therefore aren't being destroyed at end of function lifetime), there shouldn't be a problem with undefined behavior as well, right?
+        if( a.value < b.value ) return &a;
+        if( a.value > b.value ) return &b;
         return nullptr;
     }
 };
@@ -43,17 +42,14 @@ struct Comparator                            //4
 struct U
 {
     float first { 0 }, second { 0 };
-    float memberFunction(float* newValue)      //12
+    float memberFunction(const float& newValue)     //12
     {
         std::cout << "U's first value: " << first << std::endl;
-        if( newValue != nullptr )
-        {
-            first = *newValue;
-        }
+        first = newValue;
         std::cout << "U's first updated value: " << first << std::endl;
         while( std::abs(second - first) > 0.001f )
         {
-            if( second > first)
+            if( second > first )
             {
                 first += 0.001f;
             }
@@ -69,31 +65,27 @@ struct U
 
 struct structTwo
 {
-    static float staticFunctionA(U* that, float* newValue )        //10
+    static float staticFunctionA(U& that, const float& newValue )        //10
     {
-        if( that != nullptr && newValue != nullptr )
+        std::cout << "U's first value: " << that.first << std::endl;
+        that.first = newValue;
+        std::cout << "U's first updated value: " << that.first << std::endl;
+        while( std::abs(that.second - that.first) > 0.001f )
         {
-            std::cout << "U's first value: " << that->first << std::endl;
-            that->first = *newValue;
-            std::cout << "U's first updated value: " << that->first << std::endl;
-            while( std::abs(that->second - that->first) > 0.001f )
+            /*
+            write something that makes the distance between that->second and that->first get smaller
+            */
+            if( that.second > that.first)
             {
-                /*
-                write something that makes the distance between that->second and that->first get smaller
-                */
-                if( that->second > that->first)
-                {
-                    that->first += 0.001f;
-                }
-                else
-                {
-                    that->second += 0.001f;
-                }
+                that.first += 0.001f;
             }
-            std::cout << "U's second updated value: " << that->second << std::endl;
-            return that->second * that->first;
+            else
+            {
+                that.second += 0.001f;
+            }
         }
-        return 0.f;
+        std::cout << "U's second updated value: " << that.second << std::endl;
+        return that.second * that.first;
     }
 };
         
@@ -102,8 +94,9 @@ int main()
     T first(7, "first");                                            //6
     T second(7, "second");                                             //6
     
+    // Since pointer is being returned here, I did not change the usage.
     Comparator f;                                            //7
-    auto* smaller = f.compare(&first, &second);                              //8
+    auto* smaller = f.compare(first, second);                              //8
     if( smaller != nullptr )
     {
         std::cout << "the smaller one is << " << smaller->name << std::endl; //9
@@ -116,8 +109,8 @@ int main()
     
     U thirdTest;
     float updatedValue = 5.f;
-    std::cout << "[static func] thirdTest's multiplied values: " << structTwo::staticFunctionA( &thirdTest, &updatedValue ) << std::endl;                  //11
+    std::cout << "[static func] thirdTest's multiplied values: " << structTwo::staticFunctionA( thirdTest, updatedValue ) << std::endl;                  //11
     
     U fourthTest;
-    std::cout << "[member func] fourthTest's multiplied values: " << fourthTest.memberFunction( &updatedValue ) << std::endl;
+    std::cout << "[member func] fourthTest's multiplied values: " << fourthTest.memberFunction( updatedValue ) << std::endl;
 }
